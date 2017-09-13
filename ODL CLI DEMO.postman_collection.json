@@ -1,0 +1,440 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ODL CLI DEMO",
+		"_postman_id": "ef830c9f-0a8c-28ad-6f1f-dafa0168b451",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List CLI topology OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"input\" :\n  {\n     \"ios-cli:command\" : \"ls ~\"\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mount SSH",
+			"request": {
+				"url": "http://localhost:8181/restconf/config/network-topology:network-topology/topology/cli/node/IOS-121",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"network-topology:node\" :\n    {\n      \"network-topology:node-id\" : \"IOS-121\",\n      \n      \"cli-topology:host\" : \"192.168.56.121\",\n      \"cli-topology:port\" : \"22\",\n      \"cli-topology:transport-type\" : \"ssh\",\n      \n      \"cli-topology:device-type\" : \"ios\",\n      \"cli-topology:device-version\" : \"*\",\n      \n      \"cli-topology:username\" : \"cisco\",\n      \"cli-topology:password\" : \"cisco\"\n      \n    }\n  }"
+				},
+				"description": "To enable SSH on IOS use:\n\nhttps://networklessons.com/cisco/ccna-routing-switching-icnd1-100-105/configure-ssh-cisco-ios/\n\n\ntelnet <IP>\n enable\n  \n conf t\n enable password cisco\n interface FastEthernet0/0\n ip address 192.168.56.121 255.255.255.0\n no shutdown\n exit\n exit\n \n configure terminal\n hostname R121\n ip domain-name FRINX.LOCAL\n crypto key generate rsa\n  1024\n ip ssh version 2\n line vty 0 4\n  transport input ssh\n  login local\n  exit\n username cisco password cisco\n exit"
+			},
+			"response": []
+		},
+		{
+			"name": "Check status 121",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-121",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"network-topology:node\" :\n    {\n      \"network-topology:node-id\" : \"Linux1\",\n      \n      \"cli-topology:host\" : \"10.10.199.226\",\n      \"cli-topology:port\" : \"22\",\n      \"cli-topology:transport-type\" : \"ssh\",\n      \n      \"cli-topology:device-type\" : \"*\",\n      \"cli-topology:device-version\" : \"*\",\n      \n      \"cli-topology:username\" : \"root\",\n\t  \"cli-topology:password\" : \"frinx2017\"\n      \n    }\n  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mount TELNET",
+			"request": {
+				"url": "http://localhost:8181/restconf/config/network-topology:network-topology/topology/cli/node/IOS-122",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"network-topology:node\" :\n    {\n      \"network-topology:node-id\" : \"IOS-122\",\n      \n      \"cli-topology:host\" : \"192.168.56.122\",\n      \"cli-topology:port\" : \"23\",\n      \"cli-topology:transport-type\" : \"telnet\",\n      \n      \"cli-topology:device-type\" : \"ios\",\n      \"cli-topology:device-version\" : \"*\",\n      \n      \"cli-topology:username\" : \"cisco\",\n      \"cli-topology:password\" : \"cisco\"\n      \n    }\n  }"
+				},
+				"description": "To enable Telnet on IOS use:\n\nhttp://www.technig.com/enable-telnet-and-ssh-on-cisco-router/\n\nIf having trouble with no password set over telnet, workaround:\n\nenable\n\nconf t\nenable password cisco\ninterface FastEthernet0/0\nip address 192.168.56.122 255.255.255.0\nno shutdown\nexit\nexit\n\nconf t\nline vty 0 4\npassword cisco\nlogin\nexec-timeout 40\nmotd-banner\nexit\nexit"
+			},
+			"response": []
+		},
+		{
+			"name": "List CLI topology OPER II",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"input\" :\n  {\n     \"ios-cli:command\" : \"ls ~\"\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Version 121 OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/ios-essential:version",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Version 122 OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-122/yang-ext:mount/ios-essential:version",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interfaces 121 OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/ios-essential:interfaces",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interfaces 122 OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-122/yang-ext:mount/ios-essential:interfaces",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all 121 OPER",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all 121 CONFIG",
+			"request": {
+				"url": "http://localhost:8181/restconf/config/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Vrf 121",
+			"request": {
+				"url": "http://localhost:8181/restconf/config/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/ios-essential:vrfs/vrf/VRFfromPOSTMAN",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"vrf\": {\n    \t\"id\": \"VRFfromPOSTMAN\",\n    \t\"description\": \"This was created from POSTMAN - REST - ODL - CLI southbound - IOS\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all 121 OPER II",
+			"request": {
+				"url": "http://localhost:8181/restconf/operational/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Vrf 121",
+			"request": {
+				"url": "http://localhost:8181/restconf/config/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/ios-essential:vrfs/vrf/VRFfromPOSTMAN",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vrfs using generic RPC 121",
+			"request": {
+				"url": "http://localhost:8181/restconf/operations/network-topology:network-topology/topology/cli/node/IOS-121/yang-ext:mount/cli-unit-generic:execute-and-read",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"input\" :\n  {\n     \"ios-cli:command\" : \"sh capability feature routing\"\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
